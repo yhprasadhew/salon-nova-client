@@ -48,6 +48,17 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    // Check account status
+    if (user.status !== "ACTIVE") {
+      return NextResponse.json(
+        {
+          success: false,
+          message: "Your account is not active",
+        },
+        { status: 401 }
+      );
+    }
+
     // Compare entered password with hashed password
     const isPasswordValid = await compare(
       body.password,
@@ -65,7 +76,11 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Create JWT secret
+    // --------------------------------
+    // Password is correct from here
+    // --------------------------------
+
+    // Get JWT secret
     const secretText = process.env.JOSE_WEB_TOKEN;
 
     if (!secretText) {
@@ -114,6 +129,7 @@ export async function POST(request: NextRequest) {
     });
 
     return response;
+
   } catch (error) {
     console.error("Login error:", error);
 
