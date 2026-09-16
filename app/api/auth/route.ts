@@ -80,6 +80,14 @@ export async function POST(request: NextRequest) {
     // Password is correct from here
     // --------------------------------
 
+    await prisma.user.update({
+        where: {
+            id: user.id,
+        },data :{
+            lastLogin: new Date(),
+        }
+        })
+    
     // Get JWT secret
     const secretText = process.env.JOSE_WEB_TOKEN;
 

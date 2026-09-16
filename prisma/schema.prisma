@@ -13,19 +13,16 @@ datasource db {
 }
 
 model User {
-  id  String @id  @default(uuid())
-  email String @unique
-  phone String? @unique
-  firstName String
-  lastName String
-  password String
- role String @default("CUSTOMER")
- status String @default("ACTIVE") //ACTIVE, BANNED ,SUSPEND
- createdAt DateTime @default(now())
- privilages String []  @default([]) //what can do
- 
-
-
-
+  id         String   @id @default(uuid())
+  email      String   @unique
+  phone      String?  @unique
+  firstName  String
+  lastName   String
+  password   String
+  role       String   @default("CUSTOMER")
+  status     String   @default("ACTIVE")
+  createdAt  DateTime @default(now())
+  lastLogin  DateTime?
+  privilages String[] @default([])
 }
 
